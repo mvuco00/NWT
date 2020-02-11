@@ -1,0 +1,35 @@
+.App {
+  font-family: Calibri, "Trebuchet MS", sans-serif;
+}
+.header {
+  margin: -10px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  align-items: center;
+  background-color: lightgreen;
+}
+.logo {
+  padding: 6px;
+  width: 47px;
+}
+
+.tweets {
+  margin-top: 30px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.tweet {
+  background-color: rgb(212, 245, 239);
+  padding: 10px;
+  margin: 10px;
+  display: flex;
+  justify-content: space-between;
+  width: 350px;
+}
+.username {
+  font-weight: bold;
+  margin-right: 50px;
+}
