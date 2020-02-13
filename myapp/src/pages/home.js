@@ -1,4 +1,5 @@
 import React from "react";
+import Tweets from "../components/Tweets";
 
 class Home extends React.Component {
   constructor(props) {
@@ -6,7 +7,12 @@ class Home extends React.Component {
     this.state = {};
   }
   render() {
-    return <div></div>;
+    return (
+      <div>
+        <h1>Home</h1>
+        <Tweets />
+      </div>
+    );
   }
 }
 

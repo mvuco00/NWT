@@ -6,7 +6,11 @@ class SignUp extends React.Component {
     this.state = {};
   }
   render() {
-    return <div></div>;
+    return (
+      <div>
+        <h1>Sign up</h1>
+      </div>
+    );
   }
 }
 

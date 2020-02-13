@@ -33,3 +33,12 @@
   font-weight: bold;
   margin-right: 50px;
 }
+
+.prijavise {
+  cursor: pointer;
+  margin-right: 10px;
+}
+
+.registrirajse {
+  cursor: pointer;
+}

@@ -1,7 +1,7 @@
 import React from "react";
-import Tweet from "./Tweet"; //u istom je folderu
-import axios from "axios";
 
+import axios from "axios";
+/**/
 class Tweets extends React.Component {
   constructor(props) {
     super(props);

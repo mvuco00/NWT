@@ -1,5 +1,8 @@
 import React from "react";
 import logo from "../assets/process.png";
+import Link from "react-router-dom/Link";
+//import Tweets from "./components/Tweets";
+import { BrowserRouter, Switch, Route } from "react-router-dom";
 
 class Header extends React.Component {
   constructor(props) {
@@ -9,8 +12,18 @@ class Header extends React.Component {
   render() {
     return (
       <div className="header">
-        <img className="logo" src={logo} alt="fireSpot" />
-        Home
+        <Link to="/">
+          <img className="logo" src={logo} alt="logo" />
+        </Link>
+        <div>
+          <Link to="/login">
+            <button className="prijavise">Prijavi se</button>
+          </Link>
+
+          <Link to="signup">
+            <button className="registrirajse">Registriraj se</button>
+          </Link>
+        </div>
       </div>
     );
   }
