@@ -51,10 +51,19 @@
 
 .email-login {
   width: 250px;
-  margin-bottom: 20px;
   padding: 5px;
 }
 .password-login {
   width: 250px;
   padding: 5px;
+  margin-top: 20px;
+}
+
+.prijavise-login {
+  margin-top: 20px;
+}
+
+.error-popup {
+  color: red;
+  font-size: 14px;
 }
