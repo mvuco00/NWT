@@ -48,12 +48,25 @@
   justify-content: space-between;
   align-items: center;
 }
+.signinform {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+}
 
 .email-login {
   width: 250px;
   padding: 5px;
 }
 .password-login {
+  width: 250px;
+  padding: 5px;
+  margin-top: 20px;
+}
+
+.confirmPassword-login,
+.username-login {
   width: 250px;
   padding: 5px;
   margin-top: 20px;

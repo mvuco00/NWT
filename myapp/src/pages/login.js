@@ -26,6 +26,7 @@ class LogIn extends React.Component {
       .post("/login", userData)
       .then(res => {
         console.log(res.data);
+        localStorage.setItem("FBIdToken", `Bearer ${res.data.token}`);
         this.setState({
           loading: false
         });
@@ -80,6 +81,7 @@ class LogIn extends React.Component {
             <div className="error-popup">
               {this.state.errors.general || this.state.errors.password}
             </div>
+
             <button className="prijavise-login">Prijavi se</button>
           </form>
           <div className="mogucnost-registracije">
