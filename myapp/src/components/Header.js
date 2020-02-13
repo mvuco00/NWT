@@ -1,6 +1,6 @@
 import React from "react";
 import logo from "../assets/process.png";
-import Link from "react-router-dom/Link";
+import { Link } from "react-router-dom";
 //import Tweets from "./components/Tweets";
 import { BrowserRouter, Switch, Route } from "react-router-dom";
 
