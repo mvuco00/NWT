@@ -1,6 +1,6 @@
 import React from "react";
 import axios from "axios";
-
+import { Link } from "react-router-dom";
 class LogIn extends React.Component {
   constructor(props) {
     super(props);
@@ -62,11 +62,11 @@ class LogIn extends React.Component {
               onChange={this.handleChange}
             />
             {console.log(this.state.errors)}
-            <div style={{ fontSize: 15, color: "red" }}>
+            <div className="error-popup">
               {this.state.errors.email ||
-              this.state.errors.error === "auth/user-not-found"
-                ? "Wrong email"
-                : ""}
+                (this.state.errors.error === "auth/user-not-found"
+                  ? "Wrong email"
+                  : "")}
             </div>
             <input
               id="password"
@@ -77,11 +77,16 @@ class LogIn extends React.Component {
               value={this.state.password}
               onChange={this.handleChange}
             />
-            <div style={{ fontSize: 15, color: "red" }}>
+            <div className="error-popup">
               {this.state.errors.general || this.state.errors.password}
             </div>
             <button className="prijavise-login">Prijavi se</button>
           </form>
+          <div className="mogucnost-registracije">
+            <small>
+              Ako nemate račun <Link to="/signup"> registrirajte se</Link>
+            </small>
+          </div>
         </div>
       </div>
     );
