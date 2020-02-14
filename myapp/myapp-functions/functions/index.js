@@ -219,4 +219,28 @@ app.post("/login", (req, res) => {
       } else return res.status(500).json({ error: err.code });
     });
 });
+
+app.delete("/post/:postId", FBAuth, (req, res) => {
+  const document = db.doc(`/posts/${req.params.postId}`);
+
+  document
+    .get()
+    .then(doc => {
+      if (!doc.exists) {
+        return res.status(404).json({ error: "Post not found" });
+      }
+      if (doc.data().username !== req.user.username) {
+        return res.status(403).json({ error: "Unauthorised" });
+      } else {
+        return document.delete();
+      }
+    })
+    .then(() => {
+      res.json({ message: "Post deleted sucessfully" });
+    })
+    .catch(err => {
+      console.error(err);
+      return res.status(500).json({ error: err.code });
+    });
+});
 exports.api = functions.https.onRequest(app);
