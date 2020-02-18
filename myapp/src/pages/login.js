@@ -1,43 +1,35 @@
 import React from "react";
-import axios from "axios";
+import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
+//redux
+import { connect } from "react-redux";
+import { loginUser } from "../redux/actions/userActions";
+
 class LogIn extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       email: "",
       password: "",
-      loading: false, //jer zelimo da se pojavi obavijest dok se ne logiramo
       errors: {}
     };
   }
+
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.UI.errors) {
+      this.setState({ errors: nextProps.UI.errors });
+    }
+  }
+
   handleOnSubmit = event => {
     console.log("login");
     event.preventDefault();
-    this.setState({
-      loading: true
-    });
+
     const userData = {
       email: this.state.email,
       password: this.state.password
     };
-
-    axios
-      .post("/login", userData)
-      .then(res => {
-        console.log(res.data);
-        localStorage.setItem("FBIdToken", `Bearer ${res.data.token}`);
-        this.setState({
-          loading: false
-        });
-        this.props.history.push("/");
-      })
-      .catch(err => {
-        this.setState({
-          errors: err.response.data,
-          loading: false
-        });
-      });
+    this.props.loginUser(userData, this.props.history);
   };
 
   handleChange = event => {
@@ -47,7 +39,10 @@ class LogIn extends React.Component {
   };
 
   render() {
-    const { errors, loading } = this.state;
+    const {
+      UI: { loading }
+    } = this.props;
+    const { errors } = this.state;
     return (
       <div>
         <h1>Log in</h1>
@@ -62,7 +57,7 @@ class LogIn extends React.Component {
               value={this.state.email}
               onChange={this.handleChange}
             />
-            {console.log(this.state.errors)}
+
             <div className="error-popup">
               {this.state.errors.email ||
                 (this.state.errors.error === "auth/user-not-found"
@@ -95,4 +90,20 @@ class LogIn extends React.Component {
   }
 }
 
-export default LogIn;
+LogIn.propTypes = {
+  loginUser: PropTypes.func.isRequired,
+  user: PropTypes.object.isRequired,
+  UI: PropTypes.object.isRequired
+};
+
+const mapStateToProps = state => ({
+  user: state.user,
+  UI: state.UI
+});
+
+//koje akcije koristimo
+const mapActionsToProps = {
+  loginUser
+};
+
+export default connect(mapStateToProps, mapActionsToProps)(LogIn);

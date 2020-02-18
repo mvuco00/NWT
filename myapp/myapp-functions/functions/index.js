@@ -45,6 +45,7 @@ app.get("/posts", (request, response) => {
 
 //provjerava request i odluci moze li to napravit ili staje, tj jesmo li logirani
 //next
+
 const FBAuth = (req, res, next) => {
   let idToken;
   if (
@@ -88,14 +89,17 @@ app.post("/post", FBAuth, (request, response) => {
   const newPost = {
     body: request.body.body, //request sluzi za slanje necega, u ovom slucaju to je post. Request ima svoj body, to je kao property. I mi u taj body saljemo nas tekst posta (i mi smo ga nazvali body)
     username: request.user.username,
-    createdAt: admin.firestore.Timestamp.fromDate(new Date()) // kreira datum na osnovu js objekta
+    createdAt: admin.firestore.Timestamp.fromDate(new Date()), // kreira datum na osnovu js objekta
+    likeCount: 0
   };
   admin
     .firestore()
     .collection("posts")
     .add(newPost) //sluzi za dodavanje u bazu
     .then(doc => {
-      response.json({ message: `document ${doc.id} created successfully` }); // ako je uspjesno dodano saljemo poruku da je taj post dodan i salje se njegov id
+      const resPost = newPost;
+      resPost.postId = doc.id;
+      response.json(resPost); // ako je uspjesno dodano saljemo poruku da je taj post dodan i salje se njegov id
     })
     .catch(err => {
       response.status(500).json({ error: "somthing went wrong with server" }); //ako nije dodan greska je sa serverom
@@ -220,6 +224,7 @@ app.post("/login", (req, res) => {
     });
 });
 
+//BRISANJE
 app.delete("/post/:postId", FBAuth, (req, res) => {
   const document = db.doc(`/posts/${req.params.postId}`);
 
@@ -243,4 +248,217 @@ app.delete("/post/:postId", FBAuth, (req, res) => {
       return res.status(500).json({ error: err.code });
     });
 });
+
+//Get user details
+app.get("/user/:username", (req, res) => {
+  let userData = {};
+  db.doc(`/users/${req.params.username}`)
+    .get()
+    .then(doc => {
+      if (doc.exists) {
+        userData.user = doc.data();
+        return db
+          .collection("posts")
+          .where("user", "==", req.params.username)
+          .orderBy("createdAt", "desc")
+          .get();
+      } else {
+        return res.status(404).json({ error: "user not found" });
+      }
+    })
+    .then(data => {
+      userData.posts = [];
+      data.forEach(doc => {
+        userData.posts.push({
+          body: doc.data().body,
+          createdAt: doc.data().createdAt,
+          username: doc.data().username,
+          likeCount: doc.data().likeCount,
+          postId: doc.id
+        });
+      });
+      return res.json(userData);
+    })
+    .catch(err => {
+      console.error(err);
+      return res.status(500).json({ error: err.code });
+    });
+});
+
+const reduceUserDetails = data => {
+  let userDetails = {};
+  if (!isEmpty(data.bio.trim())) userDetails.bio = data.bio;
+  if (!isEmpty(data.website.trim())) {
+    //
+    if (data.website.trim().substring(0, 4) !== "http") {
+      userDetails.website = `http://${data.website.trim()}`;
+    } else {
+      userDetails.website = data.website;
+    }
+  }
+  if (!isEmpty(data.location.trim())) userDetails.location = data.location;
+
+  return userDetails;
+};
+
+//Add user details
+app.post("/user", FBAuth, (req, res) => {
+  let userDetails = reduceUserDetails(req.body);
+
+  db.doc(`/users/${req.user.username}`)
+    .update(userDetails)
+    .then(() => {
+      return res.json({ message: "Details added succesfully" });
+    })
+    .catch(err => {
+      console.error(err);
+      return res.status(500).json({ error: err.code });
+    });
+});
+
+app.get("/user", FBAuth, (req, res) => {
+  let userData = {};
+  db.doc(`/users/${req.user.username}`)
+    .get()
+    .then(doc => {
+      if (doc.exists) {
+        userData.credentials = doc.data();
+        return db
+          .collection("likes")
+          .where("username", "==", req.user.username)
+          .get();
+      }
+    })
+    .then(data => {
+      userData.likes = [];
+      data.forEach(doc => {
+        userData.likes.push(doc.data());
+      });
+      return res.json(userData);
+    })
+    .catch(err => {
+      console.error(err);
+      return res.status(500).json({ error: err.code });
+    });
+});
+
+//GET POST:POST-ID
+app.get("/post/:postId", (req, res) => {
+  let postData = {};
+  db.doc(`/posts/${req.params.postId}`)
+    .get()
+    .then(doc => {
+      if (!doc.exists) {
+        return res.status(404).json({ error: "Post not found" });
+      }
+      postData = doc.data();
+      postData.postId = doc.id;
+      return db
+        .collection("comments")
+        .where("postId", "==", req.params.postId)
+        .get();
+    })
+    .then(data => {
+      postData.comments = [];
+      data.forEach(doc => {
+        postData.comments.push(doc.data());
+      });
+      return res.json(postData);
+    })
+    .catch(err => {
+      console.error(err);
+      res.status(500).json({ error: err.code });
+    });
+});
+
+//LAJKANJE POSTA
+app.get("/post/:postId/like", FBAuth, (req, res) => {
+  const likeDocument = db
+    .collection("likes")
+    .where("username", "==", req.user.username)
+    .where("postId", "==", req.params.postId)
+    .limit(1);
+
+  const postDocument = db.doc(`/posts/${req.params.postId}`);
+  let postData = {};
+
+  postDocument
+    .get()
+    .then(doc => {
+      if (doc.exists) {
+        postData = doc.data();
+        postData.postId = doc.id;
+        return likeDocument.get();
+      } else {
+        return res.status(404).json({ error: "Post not found" });
+      }
+    })
+    .then(data => {
+      if (data.empty) {
+        return db
+          .collection("likes")
+          .add({
+            postId: req.params.postId,
+            username: req.user.username
+          })
+          .then(() => {
+            postData.likeCount++;
+            return postDocument.update({ likeCount: postData.likeCount });
+          })
+          .then(() => {
+            return res.json(postData);
+          });
+      } else {
+        return res.status(400).json({ error: "Post already liked" });
+      }
+    })
+    .catch(err => {
+      console.error(err);
+      res.status(500).json({ error: err.code });
+    });
+});
+
+app.get("/post/:postId/unlike", FBAuth, (req, res) => {
+  const likeDocument = db
+    .collection("likes")
+    .where("username", "==", req.user.username)
+    .where("postId", "==", req.params.postId)
+    .limit(1);
+
+  const postDocument = db.doc(`/posts/${req.params.postId}`);
+  let postData = {};
+
+  postDocument
+    .get()
+    .then(doc => {
+      if (doc.exists) {
+        postData = doc.data();
+        postData.postId = doc.id;
+        return likeDocument.get();
+      } else {
+        return res.status(404).json({ error: "Post not found" });
+      }
+    })
+    .then(data => {
+      if (data.empty) {
+        return res.status(400).json({ error: "Post not liked" });
+      } else {
+        return db
+          .doc(`/likes/${data.docs[0].id}`)
+          .delete()
+          .then(() => {
+            postData.likeCount--;
+            return postDocument.update({ likeCount: postData.likeCount });
+          })
+          .then(() => {
+            res.json(postData);
+          });
+      }
+    })
+    .catch(err => {
+      console.error(err);
+      res.status(500).json({ error: err.code });
+    });
+});
+
 exports.api = functions.https.onRequest(app);

@@ -1,6 +1,10 @@
 import React from "react";
-import axios from "axios";
+
+import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
+//REDUX
+import { connect } from "react-redux";
+import { signupUser } from "../redux/actions/userActions";
 
 class SignUp extends React.Component {
   constructor(props) {
@@ -10,10 +14,16 @@ class SignUp extends React.Component {
       password: "",
       confirmPassword: "",
       username: "",
-      loading: false, //jer zelimo da se pojavi obavijest dok se ne logiramo
+
       errors: {}
     };
   }
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.UI.errors) {
+      this.setState({ errors: nextProps.UI.errors });
+    }
+  }
+
   handleOnSubmit = event => {
     console.log("login");
     event.preventDefault();
@@ -26,23 +36,7 @@ class SignUp extends React.Component {
       confirmPassword: this.state.confirmPassword,
       username: this.state.username
     };
-
-    axios
-      .post("/signup", newUserData)
-      .then(res => {
-        console.log(res.data);
-        localStorage.setItem("FBIdToken", `Bearer ${res.data.token}`);
-        this.setState({
-          loading: false
-        });
-        this.props.history.push("/"); //vrati nas na pocetnu str
-      })
-      .catch(err => {
-        this.setState({
-          errors: err.response.data,
-          loading: false
-        });
-      });
+    this.props.signupUser(newUserData, this.props.history);
   };
 
   handleChange = event => {
@@ -52,7 +46,7 @@ class SignUp extends React.Component {
   };
 
   render() {
-    const { errors, loading } = this.state;
+    const { errors } = this.state;
     return (
       <div>
         <h1>Registriraj se</h1>
@@ -97,12 +91,14 @@ class SignUp extends React.Component {
             <input
               id="username"
               name="username"
-              type="username"
+              type="text"
               className="username-login"
               placeholder="username"
               value={this.state.username}
               onChange={this.handleChange}
             />
+            {console.log(this.state.errors.username)}
+            <div className="error-popup">{this.state.errors.username}</div>
 
             <button className="prijavise-login">Registriraj se</button>
           </form>
@@ -117,4 +113,15 @@ class SignUp extends React.Component {
   }
 }
 
-export default SignUp;
+SignUp.propTypes = {
+  signupUser: PropTypes.func.isRequired,
+  user: PropTypes.object.isRequired,
+  UI: PropTypes.object.isRequired
+};
+
+const mapStateToProps = state => ({
+  user: state.user,
+  UI: state.UI
+});
+
+export default connect(mapStateToProps, { signupUser })(SignUp);
