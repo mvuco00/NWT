@@ -1,5 +1,6 @@
 import React from "react";
 import Tweets from "../components/Tweets";
+import Profile from "../components/Profile";
 
 class Home extends React.Component {
   constructor(props) {
@@ -10,7 +11,14 @@ class Home extends React.Component {
     return (
       <div>
         <h1>Home</h1>
-        <Tweets />
+        <div className="grid">
+          <div>
+            <Tweets />
+          </div>
+          <div>
+            <Profile />
+          </div>
+        </div>
       </div>
     );
   }

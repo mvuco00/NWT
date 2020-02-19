@@ -21,6 +21,11 @@
   align-items: center;
 }
 
+.grid {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+}
 .tweet {
   background-color: rgb(212, 245, 239);
   padding: 10px;
