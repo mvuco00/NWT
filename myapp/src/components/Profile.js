@@ -1,6 +1,7 @@
 import React, { Fragment } from "react";
 import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
+import EditDetails from "../components/EditDetails";
 //MUI
 import Button from "@material-ui/core/Button";
 import Paper from "@material-ui/core/Paper";
@@ -73,6 +74,7 @@ class Profile extends React.Component {
               <KeyboardReturn color="primary" />
             </IconButton>
           </Tooltip>
+          <EditDetails />
         </Paper>
       ) : (
         <div>

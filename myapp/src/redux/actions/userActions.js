@@ -8,6 +8,7 @@ import {
   LOADING_USER
 } from "../types";
 import axios from "axios";
+import { connect } from "react-redux";
 
 export const loginUser = (userData, history) => dispatch => {
   dispatch({ type: LOADING_UI }); //saljemo akciju tj type
@@ -68,6 +69,16 @@ export const signupUser = (newUserData, history) => dispatch => {
         payload: err.response.data
       });
     });
+};
+
+export const editUserDetails = userDetails => dispatch => {
+  dispatch({ type: LOADING_USER });
+  axios
+    .post("/user", userDetails)
+    .then(() => {
+      dispatch(getUserData());
+    })
+    .catch(err => console.log(err));
 };
 
 const setAuthorizationHeader = token => {
