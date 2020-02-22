@@ -1,4 +1,10 @@
-import { SET_POSTS, LOADING_DATA, LIKE_POST, UNLIKE_POST } from "../types";
+import {
+  SET_POSTS,
+  LOADING_DATA,
+  LIKE_POST,
+  UNLIKE_POST,
+  DELETE_POST
+} from "../types";
 import axios from "axios";
 
 //Dohvati sve postove
@@ -42,6 +48,17 @@ export const unlikePost = postId => dispatch => {
         type: UNLIKE_POST,
         payload: res.data
       });
+    })
+    .catch(err => console.log(err));
+};
+
+//delete
+
+export const deletePost = postId => dispatch => {
+  axios
+    .delete(`/post/${postId}`)
+    .then(() => {
+      dispatch({ type: DELETE_POST, payload: postId });
     })
     .catch(err => console.log(err));
 };
