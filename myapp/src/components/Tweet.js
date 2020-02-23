@@ -1,6 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import DeletePost from "./DeletePost";
+import pin from "../assets/tack.png";
 //mui
 
 import { Link } from "react-router-dom";
@@ -63,14 +64,16 @@ class Tweet extends React.Component {
       ) : null;
     return (
       <div>
-        <div className="tweet" key={postId}>
+        <div className="postit" key={postId}>
           <div className="username">
-            <Link to={`/users/${username}`}>{username}</Link>
+            <Link to={`/users/${username}`}>{`@${username}`}</Link>
           </div>
-          <div className="body">{body}</div>
-          {likeButton}
-          <span>{likeCount} Likes</span>
-          {deleteButton}
+          <div className="postit-body">{body}</div>
+          <div className="likedelete">
+            {likeButton}
+            <span>{likeCount}</span>
+            {deleteButton}
+          </div>
         </div>
       </div>
     );

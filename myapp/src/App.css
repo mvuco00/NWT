@@ -25,18 +25,71 @@
   display: flex;
   flex-direction: row;
   justify-content: space-around;
+  margin-left: 50px;
 }
-.tweet {
-  background-color: rgb(212, 245, 239);
-  padding: 10px;
-  margin: 10px;
+
+.postit {
+  background-color: rgb(252, 248, 190);
+  margin-bottom: 30px;
+  padding: 20px;
   display: flex;
+  flex-direction: column;
   justify-content: space-between;
   width: 350px;
+  -moz-box-shadow: 3px 3px 5px 6px rgb(228, 227, 227);
+  -webkit-box-shadow: 3px 3px 5px 6px rgb(228, 227, 227);
+  box-shadow: 3px 3px 5px 6px rgb(228, 227, 227);
 }
+.positisubmit {
+  box-shadow: 0px 0px 0px 2px #9fb4f2;
+  background: linear-gradient(to bottom, #7892c2 5%, #476e9e 100%);
+  background-color: #7892c2;
+  border-radius: 10px;
+  border: 1px solid #4e6096;
+  display: inline-block;
+  cursor: pointer;
+  color: #ffffff;
+  font-family: Arial;
+  font-size: 14px;
+  padding: 5px 9px;
+  text-decoration: none;
+  text-shadow: 0px 1px 0px #283966;
+}
+.positisubmit:hover {
+  background: linear-gradient(to bottom, #5680b4 5%, #5d739c 100%);
+  background-color: #5981b3;
+}
+.positisubmit:active {
+  position: relative;
+  top: 1px;
+}
+
 .username {
   font-weight: bold;
-  margin-right: 50px;
+  margin-right: 10px;
+  align-self: flex-end;
+}
+.username a {
+  color: rgb(202, 113, 5);
+  text-decoration: none;
+  font-size: 18px;
+}
+.postit-body {
+  padding-top: 10px;
+  font-style: italic;
+  font-size: 19px;
+}
+.likedelete {
+  display: flex;
+  justify-content: flex-end;
+}
+.postitcomp {
+  display: flex;
+  flex-direction: column;
+}
+.positisubmit {
+  align-self: flex-end;
+  margin-top: 5px;
 }
 
 .prijavise {

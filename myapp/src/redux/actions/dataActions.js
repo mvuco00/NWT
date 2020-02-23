@@ -3,7 +3,11 @@ import {
   LOADING_DATA,
   LIKE_POST,
   UNLIKE_POST,
-  DELETE_POST
+  DELETE_POST,
+  CLEAR_ERRORS,
+  POST_TWEET,
+  LOADING_UI,
+  SET_ERRORS
 } from "../types";
 import axios from "axios";
 
@@ -22,6 +26,26 @@ export const getPosts = () => dispatch => {
       dispatch({
         type: SET_POSTS,
         payload: null
+      });
+    });
+};
+
+//POST tweet
+export const postTweet = newTweet => dispatch => {
+  dispatch({ type: LOADING_UI });
+  axios
+    .post("/post", newTweet)
+    .then(res => {
+      dispatch({
+        type: POST_TWEET,
+        payload: res.data
+      });
+      dispatch({ type: CLEAR_ERRORS });
+    })
+    .catch(err => {
+      dispatch({
+        type: SET_ERRORS,
+        payload: err.response.data
       });
     });
 };

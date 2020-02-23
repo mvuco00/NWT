@@ -38,7 +38,7 @@ class Profile extends React.Component {
 
     let profileMarkUp = !loading ? (
       authenticated ? (
-        <Paper className="paper">
+        <div>
           <div className="profile-details">
             <MuiLink
               component={Link}
@@ -75,32 +75,30 @@ class Profile extends React.Component {
             </IconButton>
           </Tooltip>
           <EditDetails />
-        </Paper>
+        </div>
       ) : (
         <div>
-          <Paper className="nismo-auth">
-            <Typography variant="body2" align="center">
-              No profile found, please LOG IN
-            </Typography>
-            <div className="profile-button">
-              <Button
-                variant="contained"
-                color="secondary"
-                component={Link}
-                to="/login"
-              >
-                LOG IN
-              </Button>
-              <Button
-                variant="contained"
-                color="secondary"
-                component={Link}
-                to="/signup"
-              >
-                SIGN UP
-              </Button>
-            </div>
-          </Paper>
+          <Typography variant="body2" align="center">
+            No profile found, please LOG IN
+          </Typography>
+          <div className="profile-button">
+            <Button
+              variant="contained"
+              color="secondary"
+              component={Link}
+              to="/login"
+            >
+              LOG IN
+            </Button>
+            <Button
+              variant="contained"
+              color="secondary"
+              component={Link}
+              to="/signup"
+            >
+              SIGN UP
+            </Button>
+          </div>
         </div>
       )
     ) : (
