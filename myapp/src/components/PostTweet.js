@@ -34,17 +34,17 @@ class PostTweet extends React.Component {
       });
     }
     if (!nextProps.UI.errors && !nextProps.UI.loading) {
-      this.setState({ body: "" });
-      this.handleClose();
+      this.setState({ body: "", errors: {} });
     }
   }
-
+  /*
   handleOpen = () => {
     this.setState({ open: true });
   };
   handleClose = () => {
     this.setState({ open: false, errors: {} });
   };
+  */
   handleChange = event => {
     this.setState({ [event.target.name]: event.target.value });
   };
@@ -137,10 +137,10 @@ class PostTweet extends React.Component {
         >
           {" "}
           SUBMIT
-          {loading && (
-            <CircularProgress size={30} className="circular-progress" />
-          )}
         </button>
+        {loading && (
+          <CircularProgress size={15} className="circular-progress" />
+        )}
       </div>
     );
   }

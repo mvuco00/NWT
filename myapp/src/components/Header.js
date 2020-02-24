@@ -37,11 +37,6 @@ class Header extends React.Component {
               <AddIcon color="primary" />
             </MyButton>
 
-            <Tooltip title="Logout" placement="top">
-              <IconButton onClick={this.handleLogout}>
-                <KeyboardReturn color="primary" />
-              </IconButton>
-            </Tooltip>
             <Button color="inherit" onClick={this.handleLogout}>
               Odjavi se
             </Button>

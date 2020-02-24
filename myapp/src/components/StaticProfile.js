@@ -3,40 +3,26 @@ import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
 import EditDetails from "../components/EditDetails";
 //MUI
-import Button from "@material-ui/core/Button";
 import MuiLink from "@material-ui/core/Link";
 import Typography from "@material-ui/core/Typography";
 import LocationOn from "@material-ui/icons/LocationOn";
 import LinkIcon from "@material-ui/icons/Link";
 import Tooltip from "@material-ui/core/Tooltip";
-import IconButton from "@material-ui/core/IconButton";
 import KeyboardReturn from "@material-ui/icons/KeyboardReturn";
 
-//redux
-import { connect } from "react-redux";
-import { logoutUser } from "../redux/actions/userActions";
+import IconButton from "@material-ui/core/IconButton";
 
-class Profile extends React.Component {
+class StaticProfile extends React.Component {
   constructor(props) {
     super(props);
     this.state = {};
   }
-
-  handleLogout = () => {
-    this.props.logoutUser();
-  };
-
   render() {
     const {
-      user: {
-        credentials: { username, createdAt, bio, website, location },
-        loading,
-        authenticated
-      }
+      profile: { username, createdAt, imageUrl, bio, website, location }
     } = this.props;
-
-    let profileMarkUp = !loading ? (
-      authenticated ? (
+    return (
+      <div>
         <div className="sec-column">
           <div className="profile-details">
             <MuiLink
@@ -75,48 +61,13 @@ class Profile extends React.Component {
           </Tooltip>
           <EditDetails />
         </div>
-      ) : (
-        <div>
-          <Typography variant="body2" align="center">
-            No profile found, please LOG IN
-          </Typography>
-          <div className="profile-button">
-            <Button
-              variant="contained"
-              color="secondary"
-              component={Link}
-              to="/login"
-            >
-              LOG IN
-            </Button>
-            <Button
-              variant="contained"
-              color="secondary"
-              component={Link}
-              to="/signup"
-            >
-              SIGN UP
-            </Button>
-          </div>
-        </div>
-      )
-    ) : (
-      <p>loading</p>
+      </div>
     );
-
-    return profileMarkUp;
   }
 }
 
-const mapStateToProps = state => ({
-  user: state.user
-});
-
-const mapActionsToProps = { logoutUser };
-
-Profile.propTypes = {
-  user: PropTypes.object.isRequired,
-  logoutUser: PropTypes.func.isRequired
+StaticProfile.propTypes = {
+  profile: PropTypes.object.isRequired
 };
 
-export default connect(mapStateToProps, mapActionsToProps)(Profile);
+export default StaticProfile;

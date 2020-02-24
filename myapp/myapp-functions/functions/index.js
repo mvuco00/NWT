@@ -83,7 +83,7 @@ const FBAuth = (req, res, next) => {
 //objavi post
 app.post("/post", FBAuth, (request, response) => {
   if (request.body.body.trim() === "") {
-    return res.status(400).json({ body: "Write something" });
+    return response.status(400).json({ body: "Write something" });
   }
 
   const newPost = {
@@ -259,8 +259,7 @@ app.get("/user/:username", (req, res) => {
         userData.user = doc.data();
         return db
           .collection("posts")
-          .where("user", "==", req.params.username)
-          .orderBy("createdAt", "desc")
+          .where("username", "==", req.params.username)
           .get();
       } else {
         return res.status(404).json({ error: "user not found" });

@@ -17,11 +17,11 @@ class Tweets extends React.Component {
   }
 
   render() {
-    const { posts, loading, post } = this.props.data;
+    const { posts, loading } = this.props.data;
 
     let recentPosts = !loading ? (
-      posts.map(post1 => (
-        <Tweet post={post1} />
+      posts.map(post => (
+        <Tweet key={post.postId} post={post} />
         /*
          <div className="tweet" key={post.postId}>
           <div className="username">{post.username}</div>
@@ -38,8 +38,7 @@ class Tweets extends React.Component {
 Tweets.propTypes = {
   getPosts: PropTypes.func.isRequired,
   data: PropTypes.object.isRequired,
-  user: PropTypes.object.isRequired,
-  post: PropTypes.object.isRequired
+  user: PropTypes.object.isRequired
 };
 
 const mapStateToProps = state => ({
