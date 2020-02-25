@@ -51,6 +51,14 @@ class Profile extends React.Component {
       authenticated ? (
         <div className="sec-column">
           <div className="profile-details">
+            <MuiLink
+              component={Link}
+              to={`/users/${username}`}
+              color="primary"
+              variant="h5"
+            >
+              <h4 className="profile-username">@{username}</h4>
+            </MuiLink>
             <div className="slikaibio">
               <img src={imageUrl} alt="userImage" className="biguserimage" />
               <input
@@ -62,14 +70,6 @@ class Profile extends React.Component {
               <IconButton onClick={this.handleEditPicture}>
                 <EditIcon color="primary" />
               </IconButton>
-              <MuiLink
-                component={Link}
-                to={`/users/${username}`}
-                color="primary"
-                variant="h5"
-              >
-                @{username}
-              </MuiLink>
             </div>
 
             <hr />
@@ -97,27 +97,20 @@ class Profile extends React.Component {
           <EditDetails />
         </div>
       ) : (
-        <div>
-          <Typography variant="body2" align="center">
-            No profile found, please LOG IN
-          </Typography>
+        <div className="naslovnica-right">
+          <h1 className="main-title">
+            Saznaj što se trenutno događa u svijetu
+          </h1>
+          <h3 className="snd-title">
+            Pridruži se PostIt aplikaciji već danas{" "}
+          </h3>
           <div className="profile-button">
-            <Button
-              variant="contained"
-              color="secondary"
-              component={Link}
-              to="/login"
-            >
-              LOG IN
-            </Button>
-            <Button
-              variant="contained"
-              color="secondary"
-              component={Link}
-              to="/signup"
-            >
-              SIGN UP
-            </Button>
+            <button className="profile-login-btn">
+              <Link to="/login">PRIJAVI SE</Link>
+            </button>
+            <button className="profile-signup-btn">
+              <Link to="/signup">REGISTRIRAJ SE</Link>
+            </button>
           </div>
         </div>
       )

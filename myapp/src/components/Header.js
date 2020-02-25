@@ -12,8 +12,7 @@ import IconButton from "@material-ui/core/IconButton";
 import KeyboardReturn from "@material-ui/icons/KeyboardReturn";
 
 //icons
-import AddIcon from "@material-ui/icons/Add";
-import HomeIcon from "@material-ui/icons/Home";
+
 import { logoutUser } from "../redux/actions/userActions";
 
 class Header extends React.Component {

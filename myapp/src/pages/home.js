@@ -13,9 +13,9 @@ class Home extends React.Component {
   render() {
     return (
       <div>
-        <h1>Naslovnica</h1>
         <div className="grid">
           <div>
+            <h1 className="naslov">Naslovnica</h1>
             <PostTweet />
             <Tweets />
           </div>
