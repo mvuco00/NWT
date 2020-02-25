@@ -521,4 +521,26 @@ app.post("/user/image", FBAuth, (req, res) => {
   busboy.end(req.rawBody);
 });
 
+exports.onUserImageChange = functions.firestore
+  .document("/users/{userId}")
+  .onUpdate(change => {
+    console.log(change.before.data());
+    console.log(change.after.data());
+    if (change.before.data().imageUrl !== change.after.data().imageUrl) {
+      console.log("image has changed");
+      const batch = db.batch();
+      return db
+        .collection("posts")
+        .where("username", "==", change.before.data().username)
+        .get()
+        .then(data => {
+          data.forEach(doc => {
+            const post = db.doc(`/posts/${doc.id}`);
+            batch.update(post, { userImage: change.after.data().imageUrl });
+          });
+          return batch.commit();
+        });
+    } else return true;
+  });
+
 exports.api = functions.https.onRequest(app);

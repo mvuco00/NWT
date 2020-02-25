@@ -33,10 +33,6 @@ class Header extends React.Component {
         </Link>
         {authenticated ? (
           <div>
-            <MyButton tip="Create a post">
-              <AddIcon color="primary" />
-            </MyButton>
-
             <Button color="inherit" onClick={this.handleLogout}>
               Odjavi se
             </Button>

@@ -9,12 +9,13 @@ import Typography from "@material-ui/core/Typography";
 import LocationOn from "@material-ui/icons/LocationOn";
 import LinkIcon from "@material-ui/icons/Link";
 import Tooltip from "@material-ui/core/Tooltip";
+import EditIcon from "@material-ui/icons/Edit";
 import IconButton from "@material-ui/core/IconButton";
 import KeyboardReturn from "@material-ui/icons/KeyboardReturn";
 
 //redux
 import { connect } from "react-redux";
-import { logoutUser } from "../redux/actions/userActions";
+import { logoutUser, uploadImage } from "../redux/actions/userActions";
 
 class Profile extends React.Component {
   constructor(props) {
@@ -26,10 +27,21 @@ class Profile extends React.Component {
     this.props.logoutUser();
   };
 
+  handleImageChange = event => {
+    const image = event.target.files[0];
+    const formData = new FormData();
+    formData.append("image", image, image.name);
+    this.props.uploadImage(formData);
+  };
+  handleEditPicture = () => {
+    const fileInput = document.getElementById("imageInput");
+    fileInput.click();
+  };
+
   render() {
     const {
       user: {
-        credentials: { username, createdAt, bio, website, location },
+        credentials: { username, createdAt, bio, website, location, imageUrl },
         loading,
         authenticated
       }
@@ -39,14 +51,27 @@ class Profile extends React.Component {
       authenticated ? (
         <div className="sec-column">
           <div className="profile-details">
-            <MuiLink
-              component={Link}
-              to={`/users/${username}`}
-              color="primary"
-              variant="h5"
-            >
-              @{username}
-            </MuiLink>
+            <div className="slikaibio">
+              <img src={imageUrl} alt="userImage" className="biguserimage" />
+              <input
+                type="file"
+                id="imageInput"
+                hidden="hidden"
+                onChange={this.handleImageChange}
+              />
+              <IconButton onClick={this.handleEditPicture}>
+                <EditIcon color="primary" />
+              </IconButton>
+              <MuiLink
+                component={Link}
+                to={`/users/${username}`}
+                color="primary"
+                variant="h5"
+              >
+                @{username}
+              </MuiLink>
+            </div>
+
             <hr />
             {bio && <Typography variant="body2">{bio}</Typography>}
             <hr />
@@ -68,11 +93,7 @@ class Profile extends React.Component {
               </Fragment>
             )}
           </div>
-          <Tooltip title="Logout" placement="top">
-            <IconButton onClick={this.handleLogout}>
-              <KeyboardReturn color="primary" />
-            </IconButton>
-          </Tooltip>
+
           <EditDetails />
         </div>
       ) : (
@@ -112,11 +133,12 @@ const mapStateToProps = state => ({
   user: state.user
 });
 
-const mapActionsToProps = { logoutUser };
+const mapActionsToProps = { logoutUser, uploadImage };
 
 Profile.propTypes = {
   user: PropTypes.object.isRequired,
-  logoutUser: PropTypes.func.isRequired
+  logoutUser: PropTypes.func.isRequired,
+  uploadImage: PropTypes.func.isRequired
 };
 
 export default connect(mapStateToProps, mapActionsToProps)(Profile);
