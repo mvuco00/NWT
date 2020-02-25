@@ -51,7 +51,6 @@ class StaticProfile extends React.Component {
                   </div>
                 </div>
               )}
-              <EditDetails />
             </div>
           </div>
         </div>

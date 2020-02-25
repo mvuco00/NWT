@@ -45,7 +45,10 @@ class LogIn extends React.Component {
     const { errors } = this.state;
     return (
       <div>
-        <h1>Log in</h1>
+        <div className="logintitle">
+          <div>Prijavite se na Post-It</div>
+        </div>
+
         <div>
           <form className="loginform" onSubmit={this.handleOnSubmit}>
             <input

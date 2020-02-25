@@ -317,12 +317,40 @@
   color: #747396;
 }
 .biguserimage2 {
+  border-radius: 50%;
   width: 150px;
   height: 150px;
 }
 .username-prof {
   font-size: 34px;
   color: #5d739c;
+}
+.logintitle {
+  display: flex;
+  justify-content: center;
+  margin-top: 45px;
+  color: rgb(109, 124, 138);
+  font-size: 32px;
+  font-weight: bold;
+  margin-bottom: 25px;
+}
+.prijavise-login {
+  -moz-box-shadow: -1px 1px 0px -6px #9fb4f2;
+  -webkit-box-shadow: -1px 1px 0px -6px #9fb4f2;
+  box-shadow: -1px 1px 0px -6px #9fb4f2;
+  background-color: #50afc7;
+  -webkit-border-radius: 20px;
+  -moz-border-radius: 20px;
+  border-radius: 20px;
+  border: 2px solid #2ebbb4;
+  display: inline-block;
+  cursor: pointer;
+  color: #ffffff;
+  font-family: Arial;
+  font-size: 15px;
+  padding: 5px 30px;
+  text-decoration: none;
+  text-shadow: 0px 0px 0px #97a3c2;
 }
 
 @media only screen and (max-width: 1045px) {
@@ -427,6 +455,15 @@
   .postit {
     width: 240px;
   }
+  .logintitle {
+    font-size: 28px;
+  }
+  #email,
+  #password,
+  #confirmPassword,
+  #username {
+    width: 220px;
+  }
 }
 
 @media only screen and (max-width: 285px) {
@@ -436,5 +473,17 @@
   }
   .username-prof {
     font-size: 25px;
+  }
+}
+
+@media only screen and (max-width: 261px) {
+  .logintitle {
+    font-size: 24px;
+  }
+  #email,
+  #password,
+  #confirmPassword,
+  #username {
+    width: 210px;
   }
 }

@@ -49,7 +49,8 @@ class SignUp extends React.Component {
     const { errors } = this.state;
     return (
       <div>
-        <h1>Registriraj se</h1>
+        <div className="logintitle">Registriraj se</div>
+
         <div>
           <form className="signinform" onSubmit={this.handleOnSubmit}>
             <input
