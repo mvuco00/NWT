@@ -97,7 +97,7 @@ class Profile extends React.Component {
             Saznaj što se trenutno događa u svijetu
           </h1>
           <h3 className="snd-title">
-            Pridruži se PostIt aplikaciji već danas{" "}
+            Pridruži se Post-It aplikaciji već danas{" "}
           </h3>
           <div className="profile-button">
             <button className="profile-login-btn">
