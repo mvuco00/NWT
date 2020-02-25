@@ -73,6 +73,7 @@
 .biguserimage {
   width: 150px;
   height: 150px;
+  border-radius: 50%;
 }
 .positisubmit {
   box-shadow: 0px 0px 0px 2px #9fb4f2;
@@ -222,6 +223,7 @@
   text-decoration: none;
   text-shadow: 0px 0px 0px #97a3c2;
 }
+
 .profile-signup-btn:hover {
   background-color: #71c2bb;
 }
@@ -450,6 +452,9 @@
     width: 100px;
     height: 100px;
   }
+  .MuiButton-label {
+    font-size: 12px;
+  }
 }
 @media only screen and (max-width: 310px) {
   .postit {
@@ -474,6 +479,9 @@
   .username-prof {
     font-size: 25px;
   }
+  .MuiButton-label {
+    font-size: 11px;
+  }
 }
 
 @media only screen and (max-width: 261px) {
@@ -485,5 +493,12 @@
   #confirmPassword,
   #username {
     width: 210px;
+  }
+  .postit {
+    width: 200px;
+  }
+  .btns-main {
+    display: flex;
+    flex-direction: column;
   }
 }

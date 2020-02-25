@@ -41,7 +41,7 @@ class Header extends React.Component {
             </Button>
           </div>
         ) : (
-          <div>
+          <div className="btns-main">
             <Button color="inherit" component={Link} to="/login">
               Prijavi se
             </Button>

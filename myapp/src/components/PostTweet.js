@@ -81,8 +81,6 @@ class PostTweet extends React.Component {
         {loading && (
           <CircularProgress size={15} className="circular-progress" />
         )}
-        {console.log(authenticated)}
-        {loading && !authenticated ? <div>Prijavite se </div> : null}
       </div>
     );
   }

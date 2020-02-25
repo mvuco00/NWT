@@ -47,14 +47,14 @@ class DeletePost extends React.Component {
           maxWidth="sm"
         >
           <DialogTitle>
-            Jeste li sigurni da želite izbrisati objsvu?
+            Jeste li sigurni da želite izbrisati objavu?
           </DialogTitle>
           <DialogActions>
             <Button onClick={this.handleClose} color="primary">
-              Cancle
+              ODUSTANI
             </Button>
             <Button onClick={this.deletePost} color="secondary">
-              Delete
+              IZBRIŠI
             </Button>
           </DialogActions>
         </Dialog>
