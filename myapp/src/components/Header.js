@@ -25,6 +25,11 @@ class Header extends React.Component {
 
   render() {
     const { authenticated } = this.props;
+    const {
+      user: {
+        credentials: { username }
+      }
+    } = this.props;
     return (
       <div className="header">
         <Link to="/">
@@ -32,6 +37,9 @@ class Header extends React.Component {
         </Link>
         {authenticated ? (
           <div>
+            <Button color="inherit" component={Link} to={`/users/${username}`}>
+              TVOJ PROFIL
+            </Button>
             <Button color="inherit" onClick={this.handleLogout}>
               Odjavi se
             </Button>
@@ -58,7 +66,8 @@ class Header extends React.Component {
 Header.propTypes = {
   user: PropTypes.object.isRequired,
   authenticated: PropTypes.bool.isRequired,
-  logoutUser: PropTypes.func.isRequired
+  logoutUser: PropTypes.func.isRequired,
+  credentials: PropTypes.object.isRequired
 };
 const mapActionsToProps = { logoutUser };
 
