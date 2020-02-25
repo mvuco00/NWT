@@ -6,10 +6,6 @@ import { connect } from "react-redux";
 import PropTypes from "prop-types";
 //import Tweets from "./components/Tweets";
 import { BrowserRouter, Switch, Route } from "react-router-dom";
-import MyButton from "../util/MyButton";
-import Tooltip from "@material-ui/core/Tooltip";
-import IconButton from "@material-ui/core/IconButton";
-import KeyboardReturn from "@material-ui/icons/KeyboardReturn";
 
 //icons
 

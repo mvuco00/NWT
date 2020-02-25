@@ -65,19 +65,17 @@ class EditDetails extends React.Component {
 
   render() {
     return (
-      <div>
-        <Tooltip title="Edit details" placement="top">
-          <IconButton onClick={this.handleOpen} className="detailsIcon">
-            <EditIcon color="primary" />
-          </IconButton>
-        </Tooltip>
+      <div className="urediprofil2">
+        <button onClick={this.handleOpen} className="urediprofil">
+          uredi profil
+        </button>
         <Dialog
           open={this.state.open}
           onClose={this.handleClose}
           fullWidth
           maxWidth="sm"
         >
-          <DialogTitle>Edit your details</DialogTitle>
+          <DialogTitle>Uredite vaše podatke</DialogTitle>
           <DialogContent>
             <form>
               <TextField
@@ -117,11 +115,11 @@ class EditDetails extends React.Component {
             </form>
           </DialogContent>
           <DialogActions>
-            <Button onClick={this.handleClose} color="primary">
-              Cancle
+            <Button onClick={this.handleClose} color="secondary">
+              ODUSTANI
             </Button>
             <Button onClick={this.handleSubmit} color="primary">
-              Save
+              SPREMI
             </Button>
           </DialogActions>
         </Dialog>

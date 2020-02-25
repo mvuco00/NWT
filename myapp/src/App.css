@@ -237,6 +237,93 @@
   color: #7892c2;
   margin-bottom: 10px;
 }
+.profile-web a {
+  text-decoration: none;
+  color: #283966;
+}
+.bioiostalo {
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+}
+.sec-column {
+  margin-top: 40px;
+}
+
+.urediprofil {
+  box-shadow: 1px 1px 0px 0px #c4cacc;
+  background-color: transparent;
+  border-radius: 15px;
+  border: 1px solid #7ced83;
+  display: inline-block;
+  cursor: pointer;
+  color: #3a8a9e;
+  font-family: Verdana;
+  font-size: 13px;
+  padding: 3px 10px;
+  text-decoration: none;
+  text-shadow: 0px 1px 0px #e1e2ed;
+  margin-top: 10px;
+}
+.urediprofil:hover {
+  background-color: transparent;
+}
+.urediprofil:active {
+  position: relative;
+  top: 1px;
+}
+.urediprofil2 {
+  display: flex;
+  justify-content: center;
+}
+.profile-web {
+  margin-top: 7px;
+}
+.profile-loc {
+  margin-top: 5px;
+}
+.editphotoicon {
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: 20px;
+}
+.editphotoicon:hover {
+  cursor: pointer;
+}
+
+.sec2-column {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  margin-bottom: 55px;
+  margin-top: 45px;
+}
+.profile-details2 {
+  margin-left: 50px;
+}
+.profile2-bio {
+  margin-top: 20px;
+}
+.slikaibio2 {
+  display: flex;
+  flex-direction: row;
+}
+.grid2 {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
+.mojprofil {
+  color: #747396;
+}
+.biguserimage2 {
+  width: 150px;
+  height: 150px;
+}
+.username-prof {
+  font-size: 34px;
+  color: #5d739c;
+}
 
 @media only screen and (max-width: 1045px) {
   .main-title {
@@ -270,6 +357,11 @@
   }
 }
 
+@media only screen and (max-width: 710px) {
+  .sec-column {
+    display: none;
+  }
+}
 @media only screen and (max-width: 535px) {
   .grid {
     margin-left: 10px;
@@ -284,6 +376,14 @@
   .postit {
     width: 350px;
   }
+
+  .biguserimage2 {
+    width: 130px;
+    height: 130px;
+  }
+  .profile-details2 {
+    margin-left: 20px;
+  }
 }
 @media only screen and (max-width: 405px) {
   .postit {
@@ -294,19 +394,47 @@
   .postit {
     width: 300px;
   }
+  .biguserimage2 {
+    width: 125px;
+    height: 125px;
+  }
+  .username-prof {
+    font-size: 30px;
+  }
 }
 @media only screen and (max-width: 351px) {
   .postit {
     width: 275px;
+  }
+  .biguserimage2 {
+    width: 110px;
+    height: 110px;
+  }
+  .username-prof {
+    font-size: 27px;
   }
 }
 @media only screen and (max-width: 325px) {
   .postit {
     width: 260px;
   }
+  .biguserimage2 {
+    width: 100px;
+    height: 100px;
+  }
 }
 @media only screen and (max-width: 310px) {
   .postit {
     width: 240px;
+  }
+}
+
+@media only screen and (max-width: 285px) {
+  .biguserimage2 {
+    width: 90px;
+    height: 90px;
+  }
+  .username-prof {
+    font-size: 25px;
   }
 }

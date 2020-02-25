@@ -7,8 +7,7 @@ import MuiLink from "@material-ui/core/Link";
 import Typography from "@material-ui/core/Typography";
 import LocationOn from "@material-ui/icons/LocationOn";
 import LinkIcon from "@material-ui/icons/Link";
-import Tooltip from "@material-ui/core/Tooltip";
-import KeyboardReturn from "@material-ui/icons/KeyboardReturn";
+import pin from "../assets/marker.png";
 
 import IconButton from "@material-ui/core/IconButton";
 
@@ -23,43 +22,38 @@ class StaticProfile extends React.Component {
     } = this.props;
     return (
       <div>
-        <div className="sec-column">
-          <div className="profile-details">
-            <MuiLink
-              component={Link}
-              to={`/users/${username}`}
-              color="primary"
-              variant="h5"
-            >
-              @{username}
-            </MuiLink>
-            <hr />
-            {bio && <Typography variant="body2">{bio}</Typography>}
-            <hr />
-            {location && (
-              <Fragment>
-                <LocationOn color="primary" />
-                <span>{location}</span>
-                <hr />
-              </Fragment>
-            )}
-            {website && (
-              <Fragment>
-                <LinkIcon color="primary" />
-                <a href={website} target="_blank" rel="noopener noreferrer">
-                  {" "}
-                  {website}
-                  <hr />
-                </a>
-              </Fragment>
-            )}
+        <div className="sec2-column">
+          <div className="slikaibio2">
+            <div className="velikaslika">
+              <img src={imageUrl} alt="userImage" className="biguserimage2" />
+            </div>
+
+            <div className="profile-details2">
+              <Link to={`/users/${username}`} className="username-prof">
+                @{username}
+              </Link>
+
+              {bio && <div className="profile2-bio">{bio}</div>}
+
+              {location && (
+                <div className="profile-loc">
+                  <img src={pin} />
+                  <span>{location}</span>
+                </div>
+              )}
+              {website && (
+                <div>
+                  <div className="profile-web">
+                    <a href={website} target="_blank" rel="noopener noreferrer">
+                      {" "}
+                      {website}
+                    </a>
+                  </div>
+                </div>
+              )}
+              <EditDetails />
+            </div>
           </div>
-          <Tooltip title="Logout" placement="top">
-            <IconButton onClick={this.handleLogout}>
-              <KeyboardReturn color="primary" />
-            </IconButton>
-          </Tooltip>
-          <EditDetails />
         </div>
       </div>
     );

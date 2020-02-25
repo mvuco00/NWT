@@ -41,16 +41,14 @@ class user extends React.Component {
 
     return (
       <div>
-        <h1>Moj profil</h1>
-        <div className="grid">
+        {this.state.profile === null ? (
+          <p>Loading profile...</p>
+        ) : (
+          <StaticProfile profile={this.state.profile} />
+        )}
+        <div className="grid2">
           <div>{postMarkup}</div>
-          <div>
-            {this.state.profile === null ? (
-              <p>Loading profile</p>
-            ) : (
-              <StaticProfile profile={this.state.profile} />
-            )}
-          </div>
+          <div></div>
         </div>
       </div>
     );

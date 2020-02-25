@@ -5,13 +5,11 @@ import EditDetails from "../components/EditDetails";
 //MUI
 import Button from "@material-ui/core/Button";
 import MuiLink from "@material-ui/core/Link";
-import Typography from "@material-ui/core/Typography";
-import LocationOn from "@material-ui/icons/LocationOn";
-import LinkIcon from "@material-ui/icons/Link";
-import Tooltip from "@material-ui/core/Tooltip";
+
 import EditIcon from "@material-ui/icons/Edit";
 import IconButton from "@material-ui/core/IconButton";
-import KeyboardReturn from "@material-ui/icons/KeyboardReturn";
+import pin from "../assets/marker.png";
+import userphoto from "../assets/pencil.png";
 
 //redux
 import { connect } from "react-redux";
@@ -67,34 +65,31 @@ class Profile extends React.Component {
                 hidden="hidden"
                 onChange={this.handleImageChange}
               />
-              <IconButton onClick={this.handleEditPicture}>
-                <EditIcon color="primary" />
-              </IconButton>
+            </div>
+            <div className="editphotoicon">
+              <img src={userphoto} onClick={this.handleEditPicture} />
             </div>
 
-            <hr />
-            {bio && <Typography variant="body2">{bio}</Typography>}
-            <hr />
-            {location && (
-              <Fragment>
-                <LocationOn color="primary" />
-                <span>{location}</span>
-                <hr />
-              </Fragment>
-            )}
-            {website && (
-              <Fragment>
-                <LinkIcon color="primary" />
-                <a href={website} target="_blank" rel="noopener noreferrer">
-                  {" "}
-                  {website}
-                  <hr />
-                </a>
-              </Fragment>
-            )}
-          </div>
+            <div className="bioiostalo">
+              {bio && <div variant="body2">{bio}</div>}
 
-          <EditDetails />
+              {location && (
+                <div className="profile-loc">
+                  <img src={pin} />
+                  <span>{location}</span>
+                </div>
+              )}
+              {website && (
+                <div className="profile-web">
+                  <a href={website} target="_blank" rel="noopener noreferrer">
+                    {" "}
+                    {website}
+                  </a>
+                </div>
+              )}
+              <EditDetails />
+            </div>
+          </div>
         </div>
       ) : (
         <div className="naslovnica-right">
