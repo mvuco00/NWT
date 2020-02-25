@@ -35,9 +35,12 @@ app.get("/posts", (request, response) => {
           postId: doc.id,
           body: doc.data().body,
           username: doc.data().username,
-          createdAt: doc.data().createdAt
+          createdAt: doc.data().createdAt,
+          likeCount: doc.data().likeCount,
+          userImage: doc.data().userImage
         });
       });
+
       return response.json(posts);
     })
     .catch(error => console.log(error));
@@ -72,6 +75,7 @@ const FBAuth = (req, res, next) => {
     })
     .then(data => {
       req.user.username = data.docs[0].data().username;
+      req.user.imageUrl = data.docs[0].data().imageUrl;
       return next(); //request nastavlja dalje
     })
     .catch(err => {
@@ -90,7 +94,8 @@ app.post("/post", FBAuth, (request, response) => {
     body: request.body.body, //request sluzi za slanje necega, u ovom slucaju to je post. Request ima svoj body, to je kao property. I mi u taj body saljemo nas tekst posta (i mi smo ga nazvali body)
     username: request.user.username,
     createdAt: admin.firestore.Timestamp.fromDate(new Date()), // kreira datum na osnovu js objekta
-    likeCount: 0
+    likeCount: 0,
+    userImage: request.user.imageUrl
   };
   admin
     .firestore()
@@ -148,7 +153,7 @@ app.post("/signup", (req, res) => {
   if (Object.keys(errors).length > 0) {
     return res.status(400).json(errors);
   }
-
+  const defaultimage = "no-img.png";
   let token, userId;
   db.doc(`/users/${newUser.username}`)
     .get()
@@ -173,6 +178,7 @@ app.post("/signup", (req, res) => {
         username: newUser.username,
         email: newUser.email,
         createdAt: admin.firestore.Timestamp.fromDate(new Date()),
+        imageUrl: `https://firebasestorage.googleapis.com/v0/b/${firebaseConfig.storageBucket}/o/${defaultimage}?alt=media`,
         userId
       };
       return db.doc(`/users/${newUser.username}`).set(userDocument);
@@ -273,6 +279,7 @@ app.get("/user/:username", (req, res) => {
           createdAt: doc.data().createdAt,
           username: doc.data().username,
           likeCount: doc.data().likeCount,
+          userImage: doc.data().userImage,
           postId: doc.id
         });
       });
@@ -458,6 +465,60 @@ app.get("/post/:postId/unlike", FBAuth, (req, res) => {
       console.error(err);
       res.status(500).json({ error: err.code });
     });
+});
+
+//SLIKA
+app.post("/user/image", FBAuth, (req, res) => {
+  const BusBoy = require("busboy");
+  const path = require("path");
+  const os = require("os");
+  const fs = require("fs");
+
+  const busboy = new BusBoy({ headers: req.headers });
+
+  let imageToBeUploaded = {};
+  let imageFileName;
+
+  busboy.on("file", (fieldname, file, filename, encoding, mimetype) => {
+    console.log(fieldname, file, filename, encoding, mimetype);
+    if (mimetype !== "image/jpeg" && mimetype !== "image/png") {
+      return res.status(400).json({ error: "Wrong file type submitted" });
+    }
+
+    const imageExtension = filename.split(".")[filename.split(".").length - 1];
+
+    imageFileName = `${Math.round(
+      Math.random() * 1000000000000
+    ).toString()}.${imageExtension}`;
+    const filepath = path.join(os.tmpdir(), imageFileName);
+    imageToBeUploaded = { filepath, mimetype };
+    file.pipe(fs.createWriteStream(filepath));
+  });
+  busboy.on("finish", () => {
+    admin
+      .storage()
+      .bucket()
+      .upload(imageToBeUploaded.filepath, {
+        resumable: false,
+        metadata: {
+          metadata: {
+            contentType: imageToBeUploaded.mimetype
+          }
+        }
+      })
+      .then(() => {
+        const imageUrl = `https://firebasestorage.googleapis.com/v0/b/${firebaseConfig.storageBucket}/o/${imageFileName}?alt=media`;
+        return db.doc(`/users/${req.user.username}`).update({ imageUrl });
+      })
+      .then(() => {
+        return res.json({ message: "image uploaded successfully" });
+      })
+      .catch(err => {
+        console.error(err);
+        return res.status(500).json({ error: err.code });
+      });
+  });
+  busboy.end(req.rawBody);
 });
 
 exports.api = functions.https.onRequest(app);

@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import DeletePost from "./DeletePost";
-import pin from "../assets/tack.png";
+import CardMedia from "@material-ui/core/CardMedia";
 //mui
 
 import { Link } from "react-router-dom";
@@ -65,14 +65,22 @@ class Tweet extends React.Component {
     return (
       <div>
         <div className="postit" key={postId}>
-          <div className="username">
-            <Link to={`/users/${username}`}>{`@${username}`}</Link>
+          <div className="bodynphoto">
+            <img src={userImage} alt="userimage" className="userimage" />
+            <div className="usernamenbody">
+              <div className="username-post">
+                <Link to={`/users/${username}`}>{`@${username}`}</Link>
+              </div>
+
+              <div className="postit-body">{body}</div>
+            </div>
           </div>
-          <div className="postit-body">{body}</div>
+
           <div className="likedelete">
-            {likeButton}
-            <span>{likeCount}</span>
             {deleteButton}
+            <div>
+              {likeButton} {likeCount}
+            </div>
           </div>
         </div>
       </div>
